@@ -14,21 +14,24 @@ const getResponse = question => {
   })
 }
 
+//observer
 const girlfriend = () => {
   console.log('G: turnoff lights')
   console.log('G: ask for silence....')
   console.log('G: SURPRISE!!!')
 }
 
-const syndic = () => {
-  console.log('S: Monitoring...')
+// observer
+const syndic = event => {
+  console.log(`S: Monitoring... ${event.response} - ${event.date}`)
 }
 
+// subject
 const concierge = async interesteds => {
   while(true) {
     const response = await getResponse('Does boyfriend arrives? (y/N/q)')
     if(response.toLowerCase() === 'y') {
-      (interesteds||[]).forEach(obs => obs())
+      (interesteds||[]).forEach(obs => obs({ response, date: Date.now() }))
     }
     
     if(response.toLowerCase() === 'q') {
